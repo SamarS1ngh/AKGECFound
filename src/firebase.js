@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
+
 import {
       getAuth,
       signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
+      createUserWithEmailAndPassword,
       sendPasswordResetEmail,
       signOut,
     } from "firebase/auth";
@@ -13,9 +14,11 @@ import {
       getDocs,
       collection,
       where,
+      doc,
       addDoc,
+      setDoc,
     } from "firebase/firestore";
-
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -32,37 +35,41 @@ const app =initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+
+
 export const storage=getStorage(app);
 
 const logInWithEmailAndPassword = async (email, password) => {
-    try {  
+  return signInWithEmailAndPassword(auth, email, password);
+   /* try {  
       await signInWithEmailAndPassword(auth, email, password);
+      
     } catch (err) {
       console.error(err);
-      alert(err.message);
-    }
+      alert("Email or Password not Registered!");
+    }*/
   };
 
   const registerWithEmailAndPassword = async (name, email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
-      await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "users",user.uid), {
         uid: user.uid,
         name,
-        authProvider: "local",
+        
         email,
       });
     } catch (err) {
       console.error(err);
-      alert(err.message);
+      alert("Invalid Email Provided");
     }
   };
   
   const sendPasswordReset = async (email) => {
     try {
       await sendPasswordResetEmail(auth, email);
-      alert("Password reset link sent!");
+      alert("Password reset link sent! Check your spam folder if not received.");
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -72,6 +79,9 @@ const logInWithEmailAndPassword = async (email, password) => {
   const logout = () => {
     signOut(auth);
   };
+
+
+
   export {
     auth,
     db,

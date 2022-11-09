@@ -8,10 +8,7 @@ function footer(props) {
 <div className='bg-gray-900 text-white items-center flex flex-col'>
 <div>
     samar singh
-    saloni tiwari
-    siddhi agrawal
-    siddhi samar singh
-    saloni singh
+ 
 </div>
 </div>
 
