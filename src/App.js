@@ -22,8 +22,8 @@ function App() {
       <nav className='flex flex-row w-full z-10 items-center justify-around font-extrabold text-2xl font-mono bg-black text-gray-200 object-top fixed '>
         
     <a href="/">  <img src='https://bidit.mx/wp-content/uploads/2018/07/cropped-BiDiT_silver.png' className='h-14' /></a>
-      <Link to="about" smooth={true} duration={750} className="cursor-pointer hover:text-white">About</Link>
-      <Link to="contact" smooth={true} duration={750} className="cursor-pointer hover:text-white">Contact Us</Link>
+      <Link to="about" smooth={true} duration={500} className="cursor-pointer hover:text-white">About</Link>
+      <Link to="contact" smooth={true} duration={500} className="cursor-pointer hover:text-white">Contact Us</Link>
       
       
       

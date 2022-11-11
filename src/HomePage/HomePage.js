@@ -30,18 +30,16 @@ function HomePage(props) {
     e.preventDefault();
     console.log("submitting");
    
-    
-    await setDoc(doc(db,"reports",auth.currentUser.uid),{ 
-      
+    const userReports= doc(collection(db,"reports/"+auth.currentUser.email,auth.currentUser.uid));
+    await setDoc(userReports,{
+
       description: descref.current.value,
-      email: auth.currentUser.email,
-      timestamp: serverTimestamp(),
-     
-    
+      timestamp: serverTimestamp()
+
     }).then(async () =>{
       if (image) {
      
-        const storageRef = ref(storage,`images/${ image.name + auth.currentUser.uid }`)
+        const storageRef = ref(storage,`images/${ image.name + userReports.id }`)
     const uploadTask =  uploadBytesResumable(storageRef,image);
     setimage(null);  
     uploadTask.on(
@@ -54,14 +52,19 @@ function HomePage(props) {
               console.log(url);
 
                 
-                await setDoc(doc(db,'reports', auth.currentUser.uid ),{imgurl:url},{merge:true});
+              await  setDoc(userReports,{imgurl:url},{merge:true})
+                  alert('Reported')
+                  
+                
+                 
+             
              // setimgurl(url);   
           });
+          setinput("")
       }
   );         
   
-        alert('Reported'); 
-       setinput("")
+       
        
       }
     })
